@@ -127,14 +127,14 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
 
               <form onSubmit={handleSubmit} className="w-full space-y-5">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">{t('modal.phone')}</label>
-                  <div className="flex gap-2">
+                  <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">{t('modal.phone')}</label>
+                  <div className="flex bg-brand-bg/50 border border-brand-accent/10 rounded-xl overflow-hidden focus-within:border-brand-accent/50 transition-colors">
                     {/* Country Selector */}
                     <div className="relative">
                       <button
                         type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        className="h-14 bg-brand-bg/50 border border-brand-accent/10 rounded-xl px-4 flex items-center gap-2 hover:border-brand-accent/30 transition-colors"
+                        className="h-14 px-4 flex items-center gap-2 hover:bg-brand-accent/5 transition-colors border-r border-brand-accent/10"
                       >
                         <span className="text-lg">{COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag}</span>
                         <span className="font-bold text-white text-sm">{formData.countryCode}</span>
@@ -175,7 +175,7 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
                       placeholder="6 12 34 56 78"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="flex-1 bg-brand-bg/50 border border-brand-accent/10 rounded-xl px-5 py-4 focus:border-brand-accent/50 focus:outline-none transition-colors font-bold text-white placeholder:text-brand-accent/20"
+                      className="flex-1 bg-transparent px-5 py-4 focus:outline-none transition-colors font-bold text-white placeholder:text-brand-accent/20"
                     />
                   </div>
                 </div>
