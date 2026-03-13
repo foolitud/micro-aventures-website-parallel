@@ -1,0 +1,45 @@
+import { Adventure } from '../types';
+
+export const adventures: Adventure[] = [
+  {
+    id: '1',
+    title: 'Le Protocole Fantôme',
+    description: 'Une intelligence artificielle semble avoir pris le contrôle d\'un serveur critique. Vous avez 45 minutes pour la désactiver avant qu\'elle ne s\'échappe sur le réseau mondial.',
+    players: '1 à 4 joueurs',
+    contactLabel: 'Email',
+    contact: 'start@parallel-adventure.com',
+    imageUrl: 'https://picsum.photos/seed/cyber/1200/800?blur=2',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    isFeatured: true,
+  },
+  {
+    id: '2',
+    title: 'L\'Appel de Minuit',
+    description: 'Un message vocal énigmatique vous donne rendez-vous dans une ruelle sombre via Google Maps. Résolvez l\'énigme spatiale.',
+    players: '1 à 2 joueurs',
+    contactLabel: 'Numéro',
+    contact: '+33 6 12 34 56 78',
+    imageUrl: 'https://picsum.photos/seed/midnight/800/600',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+  },
+  {
+    id: '3',
+    title: 'Héritage Cryptique',
+    description: 'Un lointain oncle vous a légué un portefeuille crypto, mais le mot de passe est dispersé sur 3 sites web différents.',
+    players: '1 joueur',
+    contactLabel: 'Email',
+    contact: 'heritage@parallel-adventure.com',
+    imageUrl: 'https://picsum.photos/seed/crypto/800/600',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+  },
+  {
+    id: '4',
+    title: 'Alerte Enlèvement',
+    description: 'Vous recevez la photo d\'une pièce fermée à clé. Utilisez les détails de l\'image pour identifier le lieu et prévenir les secours.',
+    players: '2 à 5 joueurs',
+    contactLabel: 'Numéro',
+    contact: '+33 7 89 01 23 45',
+    imageUrl: 'https://picsum.photos/seed/room/800/600',
+    videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  }
+];
