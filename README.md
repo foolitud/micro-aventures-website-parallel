@@ -1,20 +1,45 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Micro-aventures Parallel 🌲
 
-# Run and deploy your AI Studio app
+Une expérience immersive et responsive pour découvrir les micro-aventures Parallel. Ce site web est conçu comme une porte d'entrée interactive, adoptant un format de défilement vertical inspiré de TikTok pour une immersion maximale, que ce soit sur bureau ou mobile.
 
-This contains everything you need to run your app locally.
+## 🚀 Concept
 
-View your app in AI Studio: https://ai.studio/apps/a88213c2-0a1f-4c00-841a-f3a716da7004
+Parallel réinvente l'aventure. Pas de boîtes, pas de téléchargements compliqués : tout se passe via vos outils de communication habituels (WhatsApp/SMS), en parallèle de votre vie réelle. 
 
-## Run Locally
+Ces **micro-aventures** sont des formats courts conçus pour vous initier au concept avant de plonger dans des expériences de plusieurs jours.
 
-**Prerequisites:**  Node.js
+## ✨ Caractéristiques
 
+- **Expérience Immersive** : Navigation fluide avec scroll-snapping vertical (format TikTok).
+- **Design Premium** : Esthétique soignée avec effets de glassmorphisme, typographie Roboto et animations fluides.
+- **Mobile-First** : Interface entièrement optimisée pour les smartphones.
+- **Formulaire de Contact** : Système de collecte d'informations (email & téléphone) avec sélecteur d'indicatifs internationaux par pays.
+- **Branding Officiel** : Intégration du logo et de l'ADN visuel de Parallel.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠️ Stack Technique
+
+- **Framework** : [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Styling** : [Tailwind CSS](https://tailwindcss.com/)
+- **Animations** : [Framer Motion](https://www.framer.com/motion/)
+- **Icons** : [Lucide React](https://lucide.dev/)
+
+## 📦 Installation
+
+1. **Cloner le projet** :
+   ```bash
+   git clone https://github.com/foolitud/micro-aventures-website-parallel.git
+   ```
+
+2. **Installer les dépendances** :
+   ```bash
+   npm install
+   ```
+
+3. **Lancer le serveur de développement** :
+   ```bash
+   npm run dev
+   ```
+
+## 🌐 Déploiement
+
+Le projet est configuré pour un déploiement instantané sur **Vercel**. Chaque push sur la branche `main` déclenche automatiquement une mise à jour du site en production.
