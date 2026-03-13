@@ -30,6 +30,10 @@ export const translations = {
       duo: "Duo",
     },
     adventures: {
+      "5": {
+        title: "Le Pari Torride",
+        description: "Prouvez votre connexion pour débloquer votre soirée.",
+      },
       "1": {
         title: "Le Protocole Fantôme",
         description: "Une intelligence artificielle semble avoir pris le contrôle d'un serveur critique. Vous avez 45 minutes pour la désactiver avant qu'elle ne s'échappe sur le réseau mondial.",
@@ -79,6 +83,10 @@ export const translations = {
       duo: "Duo",
     },
     adventures: {
+      "5": {
+        title: "The Steamy Bet",
+        description: "Prove your connection to unlock your evening.",
+      },
       "1": {
         title: "The Ghost Protocol",
         description: "An artificial intelligence seems to have taken control of a critical server. You have 45 minutes to deactivate it before it escapes onto the global network.",

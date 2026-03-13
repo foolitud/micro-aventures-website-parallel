@@ -2,6 +2,19 @@ import { Adventure } from '../types';
 
 export const adventures: Adventure[] = [
   {
+    id: '5',
+    title: 'Le Pari Torride',
+    description: 'Prouvez votre connexion pour débloquer votre soirée.',
+    players: '1 à 2 joueurs',
+    playerMode: 'Duo',
+    rating: 4.9,
+    contactLabel: 'Numéro',
+    contact: '+33 6 00 00 00 00',
+    imageUrl: '/adventures/le-pari-torride/cover.png',
+    videoUrl: '/adventures/le-pari-torride/video.mp4',
+    isFeatured: true,
+  },
+  {
     id: '1',
     title: 'Le Protocole Fantôme',
     description: 'Une intelligence artificielle semble avoir pris le contrôle d\'un serveur critique. Vous avez 45 minutes pour la désactiver avant qu\'elle ne s\'échappe sur le réseau mondial.',
