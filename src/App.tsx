@@ -5,15 +5,10 @@
 
 import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, Mail, Phone, Info, Zap, Shield, Globe, ArrowRight, X, ChevronDown } from 'lucide-react';
+import { Play, Mail, Phone, Info, Zap, Shield, Globe, ArrowRight, X, ChevronDown, Star } from 'lucide-react';
+import { useLanguage } from './i18n/LanguageContext';
 import { adventures } from './data/adventures';
 import { Adventure } from './types';
-
-const DNA_TAGS = [
-  { icon: Globe, label: "Expérience Grandeur Nature" },
-  { icon: Zap, label: "Native No-App (WhatsApp/SMS)" },
-  { icon: Shield, label: "Conséquences Réelles" }
-];
 
 const COUNTRY_CODES = [
   { code: '+33', flag: '🇫🇷', label: 'France' },
@@ -23,6 +18,30 @@ const COUNTRY_CODES = [
   { code: '+1', flag: '🇺🇸', label: 'USA' },
   { code: '+352', flag: '🇱🇺', label: 'Luxembourg' },
 ];
+
+const LanguageSwitcher = () => {
+  const { language, setLanguage } = useLanguage();
+  return (
+    <div className="flex bg-brand-primary/50 backdrop-blur-md border border-brand-accent/20 rounded-full p-1 gap-1 pointer-events-auto shadow-lg ml-4">
+      <button
+        onClick={() => setLanguage('fr')}
+        className={`px-3 py-1 rounded-full text-[10px] font-black transition-all ${
+          language === 'fr' ? 'bg-brand-accent text-brand-primary' : 'text-brand-accent/40 hover:text-brand-accent/70'
+        }`}
+      >
+        FR
+      </button>
+      <button
+        onClick={() => setLanguage('en')}
+        className={`px-3 py-1 rounded-full text-[10px] font-black transition-all ${
+          language === 'en' ? 'bg-brand-accent text-brand-primary' : 'text-brand-accent/40 hover:text-brand-accent/70'
+        }`}
+      >
+        EN
+      </button>
+    </div>
+  );
+};
 
 const ParallelLogo = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 807 262" className={className} fill="currentColor">
@@ -49,6 +68,7 @@ interface ContactModalProps {
 }
 
 const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
+  const { t } = useLanguage();
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [formData, setFormData] = useState({ email: '', phone: '', countryCode: '+33' });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -99,15 +119,15 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-accent/10 mb-6 border border-brand-accent/20">
                    <Zap size={28} className="text-brand-accent animate-pulse" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">Prêt à jouer ?</h3>
+                <h3 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mb-3 leading-none">{t('modal.ready')}</h3>
                 <p className="text-brand-accent/60 font-medium max-w-xs mx-auto">
-                   Inscrivez-vous pour lancer <span className="text-brand-accent">{adventure?.title}</span>.
+                   {t('modal.signup')} <span className="text-brand-accent">{t(`adventures.${adventure?.id}.title`)}</span>.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="w-full space-y-5">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">Numéro de téléphone</label>
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">{t('modal.phone')}</label>
                   <div className="flex gap-2">
                     {/* Country Selector */}
                     <div className="relative">
@@ -161,7 +181,7 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">Email</label>
+                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-accent/40 ml-4">{t('modal.email')}</label>
                   <input 
                     type="email" 
                     required
@@ -176,7 +196,7 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
                   type="submit"
                   className="w-full flex items-center justify-center gap-3 bg-brand-accent text-brand-primary py-5 rounded-xl font-black text-lg transition-all hover:scale-[1.02] active:scale-[0.98] mt-4 shadow-[0_0_30px_rgba(222,233,237,0.2)]"
                 >
-                  LANCER L'AVENTURE
+                  {t('modal.launch')}
                   <ArrowRight size={20} />
                 </button>
               </form>
@@ -192,16 +212,16 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
                 <Play size={40} className="fill-current ml-2" />
               </div>
               <div>
-                <h3 className="text-4xl font-black uppercase italic tracking-tighter text-white mb-2">C'est parti !</h3>
+                <h3 className="text-4xl font-black uppercase italic tracking-tighter text-white mb-2">{t('modal.success')}</h3>
                 <p className="text-brand-accent/80 font-bold text-lg leading-tight px-4">
-                  Vérifiez vos messages. L'aventure vous attend sur <span className="text-white underline">{adventure?.contactLabel}</span>.
+                  {t('modal.verify')} <span className="text-white underline">{adventure?.contactLabel}</span>.
                 </p>
               </div>
               <button 
                 onClick={onClose}
                 className="mt-4 px-10 py-4 bg-white/5 border border-brand-accent/20 rounded-xl text-brand-accent font-black uppercase tracking-widest hover:bg-white/10 transition-all text-sm"
               >
-                C'est compris
+                {t('modal.gotIt')}
               </button>
             </motion.div>
           )}
@@ -212,6 +232,7 @@ const ContactModal = ({ isOpen, onClose, adventure }: ContactModalProps) => {
 };
 
 const ConceptModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const { t } = useLanguage();
   if (!isOpen) return null;
 
   return (
@@ -238,37 +259,19 @@ const ConceptModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
         </button>
 
         <div className="flex flex-col gap-6 md:gap-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-brand-accent text-brand-primary shadow-[0_0_30px_rgba(222,233,237,0.3)] shrink-0">
-            <ParallelLogo className="h-5 md:h-6" />
-          </div>
-
           <div>
             <h3 className="text-2xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-4 leading-none">
-              Découvrez les micro-aventures Parallel
+              {t('concept.title')}
             </h3>
             <p className="text-lg md:text-2xl text-brand-accent/80 font-bold leading-tight mb-6 md:mb-8">
-              Un avant-goût pour vous initier au concept avant de plonger dans nos aventures de plusieurs jours.
+              {t('concept.description')}
             </p>
             
             <div className="space-y-4 md:space-y-6">
-              <div className="flex gap-4 items-start p-5 md:p-6 bg-brand-accent/5 rounded-2xl border border-brand-accent/10">
-                <div className="mt-1 text-brand-accent shrink-0">
-                  <Zap size={20} md:size={24} />
-                </div>
-                <p className="text-base md:text-lg font-medium text-brand-accent/90 leading-snug">
-                  Pas de boîtes de jeux, pas de CD, vous jouez via vos outils de communication habituels, en parallèle de votre vie.
+              <div className="p-5 md:p-8 bg-brand-accent/5 rounded-2xl border border-brand-accent/10">
+                <p className="text-base md:text-xl font-medium text-brand-accent/90 leading-snug text-center">
+                  {t('concept.details')}
                 </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-                {DNA_TAGS.map((tag) => (
-                  <div key={tag.label} className="flex flex-row md:flex-col items-center text-center md:text-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
-                    <tag.icon size={18} className="text-brand-accent/60 shrink-0" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-brand-accent/40 leading-tight">
-                      {tag.label}
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -277,7 +280,7 @@ const ConceptModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             onClick={onClose}
             className="w-full py-5 bg-brand-accent text-brand-primary rounded-xl font-black text-lg transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_30px_rgba(222,233,237,0.2)]"
           >
-            C'EST COMPRIS
+            {t('modal.gotIt')}
           </button>
         </div>
       </motion.div>
@@ -286,6 +289,12 @@ const ConceptModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 };
 
 const AdventureSection = ({ adventure, onPlay }: { adventure: Adventure, onPlay: (a: Adventure) => void, key?: string }) => {
+  const { t } = useLanguage();
+  const dnaTags = [
+    { icon: Globe, label: t('dna.experience') },
+    { icon: Zap, label: t('dna.noApp') },
+    { icon: Shield, label: t('dna.consequences') }
+  ];
   return (
     <section className="snap-section relative flex items-center justify-center p-3 md:p-8">
       {/* Immersive Background Video */}
@@ -325,10 +334,14 @@ const AdventureSection = ({ adventure, onPlay }: { adventure: Adventure, onPlay:
           <div className="absolute bottom-6 left-6 right-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="px-3 py-1 bg-brand-accent text-brand-primary text-[10px] font-black rounded-full uppercase tracking-widest">
-                AVENTURE
+                {t('ui.adventure')}
               </span>
               <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold border border-white/20 uppercase tracking-widest">
-                {adventure.players}
+                {adventure.playerMode === 'Solo' ? t('ui.solo') : t('ui.duo')}
+              </span>
+              <span className="px-3 py-1 bg-brand-accent/20 backdrop-blur-md rounded-full text-[10px] font-bold border border-brand-accent/20 uppercase tracking-widest flex items-center gap-1.5 text-brand-accent">
+                <Star size={10} className="fill-current" />
+                {adventure.rating.toFixed(1).replace('.', ',')}/5
               </span>
             </div>
           </div>
@@ -338,24 +351,32 @@ const AdventureSection = ({ adventure, onPlay }: { adventure: Adventure, onPlay:
         <div className="w-full md:w-1/2 p-6 md:p-14 flex flex-col justify-center">
           <div className="mb-8 text-center md:text-left">
             <h2 className="text-4xl md:text-7xl font-black text-white mb-4 md:mb-6 leading-[0.85] tracking-tighter uppercase italic">
-              {adventure.title}
+              {t(`adventures.${adventure.id}.title`)}
             </h2>
             <p className="text-base md:text-xl text-brand-accent/80 leading-tight font-medium max-w-xl mx-auto md:mx-0">
-              {adventure.description}
+              {t(`adventures.${adventure.id}.description`)}
             </p>
           </div>
 
           {/* DNA Items */}
-          <div className="grid grid-cols-1 gap-2 md:gap-3 mb-6 md:mb-10 max-w-xs mx-auto md:mx-0">
-            {DNA_TAGS.map((tag) => (
+          <div className="flex flex-row md:flex-col items-center md:items-start justify-center md:justify-start gap-4 md:gap-3 mb-8 md:mb-10 w-full">
+            {dnaTags.map((tag) => (
               <div 
                 key={tag.label}
-                className="flex items-center gap-4 text-brand-accent/70 hover:text-brand-accent transition-colors cursor-default group"
+                className="group relative flex items-center gap-4"
               >
-                <div className="w-9 h-9 rounded-full bg-brand-accent/5 flex items-center justify-center group-hover:bg-brand-accent/20 transition-all border border-brand-accent/10">
-                  <tag.icon size={18} />
+                <div className="w-12 h-12 md:w-9 md:h-9 rounded-full bg-brand-accent/5 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-brand-primary transition-all border border-brand-accent/10 cursor-pointer md:cursor-default">
+                  <tag.icon size={20} className="md:w-[18px]" />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em]">{tag.label}</span>
+                <span className="hidden md:block text-[10px] font-black uppercase tracking-[0.2em] text-brand-accent/70">{tag.label}</span>
+                
+                {/* Mobile Popover Label */}
+                <div className="md:hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 group-active:opacity-100 pointer-events-none transition-opacity">
+                  <div className="bg-brand-accent text-brand-primary text-[8px] font-black uppercase px-2 py-1 rounded whitespace-nowrap tracking-tighter shadow-lg">
+                    {tag.label}
+                  </div>
+                  <div className="w-2 h-2 bg-brand-accent rotate-45 mx-auto -mt-1" />
+                </div>
               </div>
             ))}
           </div>
@@ -363,10 +384,10 @@ const AdventureSection = ({ adventure, onPlay }: { adventure: Adventure, onPlay:
           <div className="flex justify-center md:justify-start">
             <button
               onClick={() => onPlay(adventure)}
-              className="group flex items-center gap-3 md:gap-4 bg-brand-accent text-brand-primary px-8 md:px-10 py-4 md:py-5 rounded-xl font-black text-lg md:text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(222,233,237,0.3)] hover:shadow-[0_0_50px_rgba(222,233,237,0.5)]"
+              className="group flex items-center gap-3 md:gap-4 bg-brand-accent text-brand-primary w-full md:w-auto justify-center px-8 md:px-10 py-5 rounded-2xl font-black text-lg md:text-xl transition-all hover:scale-[1.02] md:hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(222,233,237,0.2)]"
             >
-              <Play size={28} className="fill-current" />
-              LANCER L'AVENTURE
+              <Play size={24} className="fill-current md:w-7" />
+              {t('modal.launch')}
             </button>
           </div>
         </div>
@@ -374,8 +395,8 @@ const AdventureSection = ({ adventure, onPlay }: { adventure: Adventure, onPlay:
     </section>
   );
 };
-
 export default function App() {
+  const { t } = useLanguage();
   const [modal, setModal] = useState<{ isOpen: boolean; type: 'contact' | 'concept'; adventure?: Adventure }>({
     isOpen: false,
     type: 'contact'
@@ -385,22 +406,23 @@ export default function App() {
     <div className="snap-container bg-brand-bg text-brand-accent selection:bg-brand-accent/30 font-sans h-screen overflow-hidden">
       {/* Branding Logo & Info Trigger */}
       <div className="fixed top-4 left-4 right-4 md:top-8 md:left-8 md:right-8 z-50 flex items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-4 group cursor-pointer transition-all hover:brightness-110 active:scale-95 pointer-events-auto">
+        <div className="flex items-center gap-4 pointer-events-auto">
           <ParallelLogo className="h-6 md:h-10 text-white" />
+          <LanguageSwitcher />
         </div>
         
         <button 
           onClick={() => setModal({ isOpen: true, type: 'concept' })}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-brand-accent/20 bg-brand-primary/40 backdrop-blur-xl flex items-center justify-center hover:bg-brand-accent hover:text-brand-primary transition-all text-brand-accent/60 shadow-xl group pointer-events-auto"
+          className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-brand-accent flex items-center justify-center hover:scale-110 active:scale-95 transition-all text-brand-primary shadow-[0_0_30px_rgba(222,233,237,0.4)] group pointer-events-auto"
         >
-          <Info size={20} className="md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+          <Info size={22} className="md:w-7 md:h-7" />
         </button>
       </div>
 
       {/* Floating Scroll Indicator */}
-      <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-4 opacity-40 pointer-events-none">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-8 md:right-8 z-50 flex flex-col items-center gap-4 opacity-40 pointer-events-none">
         <div className="w-1 h-3 bg-brand-accent rounded-full animate-bounce" />
-        <span className="text-[8px] font-black uppercase tracking-[0.4em] rotate-90 origin-center whitespace-nowrap mt-4">SCROLL</span>
+        <span className="text-[8px] font-black uppercase tracking-[0.4em] md:rotate-90 origin-center whitespace-nowrap mt-2 md:mt-4">{t('ui.scroll')}</span>
       </div>
 
       {/* Adventures List */}

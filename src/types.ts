@@ -3,6 +3,8 @@ export interface Adventure {
   title: string;
   description: string;
   players: string;
+  playerMode: 'Solo' | 'Duo';
+  rating: number;
   contact: string;
   contactLabel: string; // e.g., "Numéro", "Email"
   imageUrl: string;
